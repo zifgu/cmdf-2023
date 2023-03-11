@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {Onboarding, Scene} from './App';
+import {Onboarding} from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import {Scene} from "./components/Scene";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
