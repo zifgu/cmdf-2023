@@ -4,7 +4,7 @@ body {
 
 .last-page {
     width: 100vw;
-    height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 0 3rem 3rem;
@@ -19,7 +19,7 @@ body {
     width: 70%;
     box-sizing: border-box;
     background-color: #F8BCBC;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 1rem;
     box-shadow: 4px 4px 12px 0px #00000080;
 }

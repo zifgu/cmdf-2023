@@ -4,8 +4,8 @@ import "./Tutorial_last.css";
 export function Tutorial_last(){
   return (
     <div className='last-page'>
-      <div>
-        <img src="onboarding.png" />
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <img src="onboarding2.png" />
       </div>
       <div style={{
         display: "flex",
