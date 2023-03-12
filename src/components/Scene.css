@@ -95,13 +95,16 @@
     color: #623412 !important;
     border-radius: 1rem;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 #overlay input {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 
     background-color: #f6ffea;
     padding: 0.5rem 0.75rem;
@@ -153,3 +156,12 @@
 .rain {
     color: #00bfec;
 }
+
+.thoughts-grid {
+    display: grid;
+    grid-template-columns: 40% 2rem 1fr;
+}
+
+/*.thoughts-grid-row div:first-child {*/
+/*    width: 20em;*/
+/*}*/

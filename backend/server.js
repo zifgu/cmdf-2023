@@ -89,7 +89,7 @@ app.post('/', function (req, res) {
     res.send('POST request successful')
   })
   .catch(err => {
-    console.log(error);
+    console.log(err);
   });
 
 

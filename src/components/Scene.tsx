@@ -7,13 +7,13 @@ import {GiExitDoor} from "react-icons/gi";
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import {RiSunFoggyFill} from "react-icons/ri";
-import {BsFillCloudRainFill} from "react-icons/bs";
+import {BsFillCloudRainFill, BsArrowRightShort} from "react-icons/bs";
 
 const MAX_SCORE = 4;
 
 export function Scene() {
   const navigate = useNavigate();
-  const [thoughts, setThoughts] = useState({});
+  const [thoughts, setThoughts] = useState<{[key: string]: string}>({});
   const [loading, setLoading] = useState(true);
   const [playerSpeaking, setPlayerSpeaking] = useState(false);
   const [latestPlayerInput, setLatestPlayerInput] = useState("");
@@ -29,6 +29,7 @@ export function Scene() {
   const camera = useRef<any>();
 
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [overlayPageNum, setOverlayPageNum] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const calculateScreenPosition = (object: SPEObject) => {
@@ -185,19 +186,58 @@ export function Scene() {
             <div id="overlay-container">
               <div id="overlay">
                 <h2 style={{margin: 0}}>Thank you for playing</h2>
-                <div>
-                  Enter your phone number if you would like to receive a daily text reminder to play again!
-                </div>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="(Optional) xxx-xxx-xxxx"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
+                {
+                  overlayPageNum == 0 &&
+                  <>
+                    <div>
+                      Congratulations on reflecting on {Object.keys(thoughts).length} thoughts!
+                    </div>
+                    <div>
+                      Review the thoughts you've reframed:
+                    </div>
+                    <div className="thoughts-grid">
+                      {
+                        Object.keys(thoughts).map((originalThought) => (
+                          <>
+                            <div>{originalThought}</div>
+                            <div><BsArrowRightShort size={25}/></div>
+                            <div>{thoughts[originalThought]}</div>
+                          </>
+                        ))
+                      }
+                    </div>
+                  </>
+                }
+                {
+                  overlayPageNum == 1 &&
+                  <>
+                    <div>
+                      Enter your phone number if you would like to receive a daily text reminder to play again!
+                    </div>
+                    <input
+                      type="text"
+                      className="input"
+                      placeholder="(Optional) xxx-xxx-xxxx"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                  </>
+                }
                 <div id="overlay-buttons-container">
-                  <button className="button" onClick={() => setOverlayOpen(false)}>Go back</button>
-                  <button className="button" onClick={() => onExit()}>See you soon</button>
+                  {
+                    overlayPageNum === 0 &&
+                    <>
+                      <button className="button" onClick={() => setOverlayOpen(false)}>Go back</button>
+                      <button className="button" onClick={() => setOverlayPageNum(overlayPageNum + 1)}>Next</button>
+                    </>
+                  }
+                  {
+                    overlayPageNum === 1 &&
+                    <>
+                      <button className="button" onClick={() => setOverlayPageNum(overlayPageNum - 1)}>Go back</button>
+                      <button className="button" onClick={() => onExit()}>See you soon</button>
+                    </>
+                  }
                 </div>
               </div>
             </div>
