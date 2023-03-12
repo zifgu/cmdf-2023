@@ -101,6 +101,7 @@ export function Scene() {
           <div id="speech-input-container">
             <input
               type="text"
+              placeholder="say what's on your mind..."
               value={text}
               onChange={(e) => setText(e.target.value)}
             />

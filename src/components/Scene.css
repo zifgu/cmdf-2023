@@ -2,7 +2,7 @@
     position: absolute;
     background-color: white;
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.5rem 0.75rem;
     max-width: 50%;
 }
 
@@ -14,10 +14,40 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-
-    padding: 2rem;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 #speech-input-container input {
     width: 80%;
+
+    background-color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
 }
+
+#speech-input-container input:active, #speech-input-container input:focus {
+    border: none;
+    outline: 3px solid rgba(255, 229, 87, 0.7);
+}
+
+#speech-input-container button {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+
+    background-color: #fffaa8;
+    color: #232121;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+#speech-input-container button:active, #speech-input-container button:focus {
+    border: none;
+    outline: 3px solid rgba(255, 229, 87, 0.7);
+}
+
