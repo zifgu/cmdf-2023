@@ -32,14 +32,14 @@
 
 #speech-input-container input:active, #speech-input-container input:focus {
     border: none;
-    outline: 3px solid rgba(255, 229, 87, 0.7);
+    outline: 3px solid rgba(255, 246, 193, 0.5);
 }
 
 #speech-input-container button {
     font-family: "Poppins", sans-serif;
     font-size: 16px;
 
-    background-color: #fffaa8;
+    background-color: #5ff8dc;
     color: #232121;
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
@@ -47,12 +47,13 @@
 }
 
 #speech-input-container button:hover {
-    background-color: #f8f05f;
+    background-color: #5ff8dc;
     transform: translateY(-2px);
-    box-shadow: 0px 2.5px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
 #speech-input-container button:active, #speech-input-container button:focus {
-    border: none;
-    outline: 3px solid rgba(255, 229, 87, 0.7);
+    outline: 3px solid rgba(255, 246, 193, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
 }
