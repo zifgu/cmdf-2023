@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import "./Scene.css";
 import {GiExitDoor} from "react-icons/gi";
 import {useNavigate} from "react-router-dom";
+import axios from 'axios';
 
 export function Scene() {
   const navigate = useNavigate();
@@ -68,6 +69,18 @@ export function Scene() {
   };
 
   const onExit = () => {
+    console.log('test')
+    axios
+    .post('http://localhost:3001/', {
+      phone: phoneNumber,
+    })
+    .then((response => {
+      console.log(response)
+    }))
+    .catch(err => {
+      console.log(err);
+    });
+
     navigate("/");
   };
 

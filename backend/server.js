@@ -79,11 +79,13 @@ console.log('userNum', userNum);
 
 app.post('/', function (req, res) {
 
+  console.log('req', req)
+
   client.messages
   .create({
      body: 'Are you feeling stressed? Visit ZenZone!',
      from: twilioNum,
-     to: userNum,
+     to: req.body.phone,
    })
   .then(message => {
     console.log(message.sid)
