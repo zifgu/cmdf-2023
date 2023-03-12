@@ -9,7 +9,7 @@ export function Tutorial(){
 
         <div className='vertical-center'>
             <a href='/game'>
-                    <button>Options</button>
+                    <button>I'd appreciate the help</button>
             </a>
             <a href='/game'>
                     <button>Options</button>
