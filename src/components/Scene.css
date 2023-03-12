@@ -46,8 +46,13 @@
     border: none;
 }
 
+#speech-input-container button:hover {
+    background-color: #f8f05f;
+    transform: translateY(-2px);
+    box-shadow: 0px 2.5px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
 #speech-input-container button:active, #speech-input-container button:focus {
     border: none;
     outline: 3px solid rgba(255, 229, 87, 0.7);
 }
-
