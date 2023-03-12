@@ -1,0 +1,33 @@
+body {
+    background-color: #B5E78D;
+}
+
+.last-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 3rem 3rem;
+}
+
+.last-page img {
+    flex-shrink: 1;
+    max-height:100%;
+}
+
+#reminder {
+    width: 70%;
+    box-sizing: border-box;
+    background-color: #F8BCBC;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 4px 4px 12px 0px #00000080;
+}
+
+#play-button {
+    background-color: #3FCD6F;
+    color: #F6FFEA;
+    font-size: 50px;
+    font-weight: bolder;
+    border-radius: 2rem;
+}

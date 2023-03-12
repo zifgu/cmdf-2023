@@ -12,6 +12,7 @@ import {Select} from "./components/Select";
 import {Home} from "./components/Home";
 import {Tutorial} from "./components/Tutorial";
 import {Tutorial_1} from "./components/Tutorial_1";
+import { Tutorial_last } from './components/Tutorial_last';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/Tutorial_1",
     element: <Tutorial_1/>,
+  },
+  {
+    path: "/Tutorial_last",
+    element: <Tutorial_last/>,
   }
 ]);
 
