@@ -69,13 +69,14 @@ export function Scene() {
   };
 
   const onExit = () => {
-    console.log('test')
+    // console.log('test')
     axios
     .post('http://localhost:3001/', {
       phone: phoneNumber,
     })
     .then((response => {
-      console.log(response)
+      // console.log(response)
+      console.log('Text reminder sent!')
     }))
     .catch(err => {
       console.log(err);

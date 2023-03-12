@@ -67,19 +67,16 @@ app.post("/reframe", async (req, res) => {
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNum = process.env.TWILIO_NUM;
-const userNum = process.env.USER_NUM;
-const client = require('twilio')(accountSid, authToken, twilioNum, userNum);
+const client = require('twilio')(accountSid, authToken, twilioNum);
 
 
-console.log('accountSid', accountSid);
-console.log('authToken', authToken);
-
-console.log('twilioNum', twilioNum);
-console.log('userNum', userNum);
+// console.log('accountSid', accountSid);
+// console.log('authToken', authToken);
+// console.log('twilioNum', twilioNum);
 
 app.post('/', function (req, res) {
 
-  console.log('req', req)
+  // console.log('req', req)
 
   client.messages
   .create({
@@ -88,7 +85,7 @@ app.post('/', function (req, res) {
      to: req.body.phone,
    })
   .then(message => {
-    console.log(message.sid)
+    // console.log(message.sid)
     res.send('POST request successful')
   })
   .catch(err => {
