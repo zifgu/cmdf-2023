@@ -35,7 +35,7 @@
 
 #speech-input-container input:active, #speech-input-container input:focus {
     border: none;
-    outline: 3px solid #f6ffea;
+    outline: 3px solid rgba(246, 255, 234, 0.5);
 }
 
 .button {
@@ -116,7 +116,7 @@
 }
 
 #overlay input:active, #overlay input:focus {
-    outline: 3px solid #f8bcbc;
+    outline: 3px solid rgba(248, 188, 188, 0.5);
 }
 
 #overlay-buttons-container {
@@ -161,7 +161,3 @@
     display: grid;
     grid-template-columns: 40% 2rem 1fr;
 }
-
-/*.thoughts-grid-row div:first-child {*/
-/*    width: 20em;*/
-/*}*/

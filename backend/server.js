@@ -47,6 +47,66 @@ Replacement thought:`,
   }
 }
 
+async function getThemes(belief) {
+  const config = {
+    model: "xlarge",
+    prompt: `These are some worries from a therapy client, followed by the main themes expressed by each worry.
+Worry: i don't know what i'm doing with my life
+Themes: Self-Doubt, Future
+Worry: none of my friends like me
+Themes: Friends, Self-Doubt, Relationships
+Worry: all my friends are doing better than me at this age
+Themes: Friends, Comparison, Success
+Worry: i'm scared i'm going to be a failure
+Themes: Future, Failure
+Worry: if i don't get married before I'm 30, i'll probably be alone forever
+Themes: Loneliness, Marriage, Relationships, Future
+Worry: i think my boss hates me and i don't know what to do about it
+Themes: Work, Relationships, Helplessness
+Worry: i'm not smart enough for the job i'm doing and i'm never going to make it
+Themes: Intelligence, Work, Future
+Worry: ${belief}
+Themes:`,
+    max_tokens: 16,
+    temperature: 0.9,
+    stop_sequences: ["\n"],
+  };
+
+  try {
+    const response = await cohere.generate(config);
+    if (response.statusCode === 200) {
+      const themes = response.body.generations[0].text.trim();
+      return themes.split(",").map((str) => str.trim());
+    } else {
+      return null;
+    }
+  } catch (err) {
+    return null;
+  }
+}
+
+async function getAllThemes(beliefs) {
+  try {
+    const input = beliefs.map((belief) => getThemes(belief));
+    const result = await Promise.all(input);
+    const themes = {};
+
+    for (let beliefThemes of result) {
+      for (let theme of beliefThemes) {
+        if (!(theme in themes)) {
+          themes[theme] = 1;
+        } else {
+          themes[theme] += 1;
+        }
+      }
+    }
+
+    return themes;
+  } catch (err) {
+    return null;
+  }
+}
+
 app.use(express.json());
 
 app.use(cors({
@@ -61,6 +121,11 @@ app.post("/reframe", async (req, res) => {
   const result = await reframe(req.body.data);
   res.send({ result });
 });
+
+app.post("/themes", async (req, res) => {
+  const result = await getAllThemes(req.body.data);
+  res.send({ result });
+})
 
 // Find your Account SID and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
