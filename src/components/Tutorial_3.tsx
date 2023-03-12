@@ -11,7 +11,7 @@ export function Tutorial_3(){
         <p>more positive or helpful way.</p>
 
         <div className='vertical-center'>
-            <a href='/tutorial_3'>
+            <a href='/Tutorial_last'>
                     <button className='tutorial-button'>how do i do that?</button>
             </a>
         </div>
