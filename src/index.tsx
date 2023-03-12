@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {Onboarding, Scene} from './App';
 import {Home} from './Home';
+
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Tutorial from './Tutorial';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/Home",
     element: <Home/>,
+  },
+  {
+    path: "/Tutorial",
+    element: <Tutorial/>,
   }
 ]);
 

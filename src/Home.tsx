@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Spline from "@splinetool/react-spline";
 import './Home.css';
-//import img from './img.png';
 
 export function Home() {
     return (
@@ -17,6 +16,7 @@ export function Home() {
                     <span className="u-text-uppercase u-text-color-md-green-900 u-font-weight-900">Z</span>
                     <span className="u-text-lowercase u-text-color-md-white-800 u-font-weight-900">one</span>
                     <span className="u-text-lowercase u-text-color-md-white-800 u-font-weight-900"> 3D</span>
+                    <img src="happy_face.png" width="90" height="60"/>
                 </h1>
                 <p>What you need to hear</p>
                 <div className='vertical-center'>
@@ -30,25 +30,16 @@ export function Home() {
                             <button>Credits</button>
                     </a>
                 </div>
-
-                &nbsp;
-                <p>Hi there, welcome to our home page! You are welcome to navigate the island and participate in conversations
-                    with an AI in each of the island that gives personalized affirmations based on your problems!
-                </p>
-                &nbsp;
+                
+                
+                <img id="left-tree" src="trees.png" width="400" height="300"/>
                 
 
-                <div className='item'>
+                {/* <div className='item'> */}
                     <img id="pig" src="img.png" width="100" height="100" />
-                </div>
+                {/* </div> */}
                 
             </div>
-            
-            {/* <div className='island'>
-                <h3>Beach</h3>
-                <h3>Forest</h3>
-                <h3>Ubc</h3>
-            </div> */}
 
         </div>
     );
