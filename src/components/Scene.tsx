@@ -104,7 +104,7 @@ export function Scene() {
       console.log(err);
     });
 
-    navigate("/");
+    navigate("/home");
   };
 
   const awaitingPlayer = text.length > 0;
