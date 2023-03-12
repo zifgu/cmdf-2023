@@ -8,23 +8,30 @@ export function Scene() {
   const [loading, setLoading] = useState(true);
   const [playerSpeaking, setPlayerSpeaking] = useState(false);
   const [speechContent, setSpeechContent] = useState("What's worrying you?");
-  const [speechPosition, setSpeechPosition] = useState([0, 0]);
+  const [aiPosition, setAiPosition] = useState([0, 0]);
+  const [playerPosition, setPlayerPosition] = useState([0, 0]);
+  const [awaitingAi, setAwaitingAi] = useState(false);
   const [text, setText] = useState("");
   const player = useRef<SPEObject>();
   const ai = useRef<SPEObject>();
   const camera = useRef<any>();
 
+  const calculateScreenPosition = (object: SPEObject) => {
+    const objectPosition = new THREE.Vector3(object.position.x, object.position.y, object.position.z);
+    const projectedPosition = objectPosition.project(camera.current).addScalar(1).divideScalar(2);
+
+    const screenPositionX = projectedPosition.x * camera.current.width;
+    const screenPositionY = projectedPosition.y * camera.current.height;
+
+    return [screenPositionX, screenPositionY];
+  }
+
   useEffect(() => {
-    const object = playerSpeaking ? player.current : ai.current;
-    if (object) {
-      const objectPosition = new THREE.Vector3(object.position.x, object.position.y, object.position.z);
-
-      const projectedPosition = objectPosition.project(camera.current).addScalar(1).divideScalar(2);
-
-      const screenPositionX = projectedPosition.x * camera.current.width;
-      const screenPositionY = projectedPosition.y * camera.current.height;
-
-      setSpeechPosition([screenPositionX, screenPositionY]);
+    if (player.current) {
+      setPlayerPosition(calculateScreenPosition(player.current));
+    }
+    if (ai.current) {
+      setAiPosition(calculateScreenPosition(ai.current));
     }
   });
 
@@ -33,6 +40,7 @@ export function Scene() {
     setPlayerSpeaking(true);
     setSpeechContent(belief);
     setText("");
+    setAwaitingAi(true);
 
     fetch("http://localhost:3001/reframe", {
       method: "POST",
@@ -49,8 +57,13 @@ export function Scene() {
       console.log(result.result);
       setPlayerSpeaking(false);
       setSpeechContent(result.result);
+      setAwaitingAi(false);
     });
   };
+
+  const speechPosition = playerSpeaking ? playerPosition : aiPosition;
+
+  const waitPosition = awaitingAi ? aiPosition : (text.length > 0 ? playerPosition : null);
 
   return (
     <>
@@ -69,6 +82,22 @@ export function Scene() {
           >
             {speechContent}
           </div>
+          {
+            waitPosition &&
+            <div
+              className="speech-bubble"
+              style={{
+                left: waitPosition[0],
+                bottom: waitPosition[1],
+              }}
+            >
+              <div id="spinners">
+                <div className="spinner-grow sm"></div>
+                <div className="spinner-grow sm"></div>
+                <div className="spinner-grow sm"></div>
+              </div>
+            </div>
+          }
           <div id="speech-input-container">
             <input
               type="text"
