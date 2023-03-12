@@ -21,13 +21,13 @@ export function Home() {
                 &nbsp; 
                 <p>Transform your Troubles - Reframe Your Mind</p>
                 <div className='vertical-center'>
-                    <a href='/Tutorial'>
+                    <a href='/tutorial'>
                             <button>Play</button>
                     </a>
                     <a href='/game'>
                             <button>Option</button>
                     </a>
-                    <a href='/game'>
+                    <a href='/credits'>
                             <button>Credits</button>
                     </a>
                 </div>
