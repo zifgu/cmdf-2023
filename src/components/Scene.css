@@ -161,3 +161,15 @@
     display: grid;
     grid-template-columns: 40% 2rem 1fr;
 }
+
+#vis {
+    position: absolute;
+    left: 1rem;
+    top: 5rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+
+#vis .circle {
+    fill: #89e2ff;
+}

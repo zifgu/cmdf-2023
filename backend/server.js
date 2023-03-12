@@ -123,6 +123,7 @@ app.post("/reframe", async (req, res) => {
 });
 
 app.post("/themes", async (req, res) => {
+  console.log(req.body.data);
   const result = await getAllThemes(req.body.data);
   res.send({ result });
 })

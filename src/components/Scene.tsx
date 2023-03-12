@@ -8,10 +8,11 @@ import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import {RiSunFoggyFill} from "react-icons/ri";
 import {BsFillCloudRainFill, BsArrowRightShort} from "react-icons/bs";
+import * as d3 from "d3";
 
 const MAX_SCORE = 4;
 
-export function Scene() {
+function SceneInner({onUpdateCluster} : {onUpdateCluster: (data: any) => void}) {
   const navigate = useNavigate();
   const [thoughts, setThoughts] = useState<{[key: string]: string}>({});
   const [loading, setLoading] = useState(true);
@@ -66,6 +67,23 @@ export function Scene() {
     });
   };
 
+  const themesRequest = async (newThoughts: any) => {
+    if (newThoughts) {
+      return await fetch("http://localhost:3001/themes", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: Object.keys(newThoughts),
+        }),
+      }).then((response) => {
+        return response.json();
+      });
+    }
+  };
+
   const askAi = async (belief: string, regenerate: boolean) => {
     if (regenerate) {
       setPlayerSpeechContent("Hmm, that doesn't fit me...");
@@ -79,14 +97,28 @@ export function Scene() {
 
     cohereRequest(belief).then((result: any) => {
       console.log(result);
-      const reframedBelief = result.result;
       setPlayerSpeaking(false);
       setAiSpeaking(true);
       setAwaitingAi(false);
       setPlayerSpeechContent("");
 
-      setAiSpeechContent(reframedBelief);
-      setThoughts({...thoughts, [belief]: reframedBelief});
+      if (result) {
+        const reframedBelief = result.result;
+        setAiSpeechContent(reframedBelief);
+        const newThoughts = {...thoughts, [belief]: reframedBelief};
+        setThoughts(newThoughts);
+        return newThoughts;
+      } else {
+        setAiSpeechContent("So sorry, an error occurred. Would you like to try again?");
+        return null;
+      }
+    }).then((newThoughts) => {
+      return themesRequest(newThoughts);
+    }).then((result) => {
+      console.log(result);
+      if (result) {
+        onUpdateCluster(result.result);
+      }
     });
   };
 
@@ -294,6 +326,81 @@ function SpeechBubble({pos, content} : {pos: number[], content: string}) {
       }}
     >
       {content}
+    </div>
+  );
+}
+
+export function Scene() {
+  const [clusterData, setClusterData] = useState({});
+
+  return (
+    <div>
+      <SceneInner onUpdateCluster={(data) => setClusterData(data)}/>
+      <Clusters data={clusterData}/>
+    </div>
+  );
+}
+
+export function Clusters({data} : {data: any}) {
+  const ref = React.useRef<any>();
+
+  useEffect(
+    () => {
+      if (data) {
+        const transformedData: any = Object.keys(data).map((theme) => ({theme, count: data[theme]}));
+
+        const chart = d3.select(ref.current).select("g");
+
+        const maxRadius = 50;
+
+        const radiusScale = d3.scaleSqrt()
+          // @ts-ignore
+          .domain([0, d3.max(Object.values(data))])
+          .range([0, maxRadius]);
+
+        const circles = chart.selectAll("circle")
+          .data(transformedData, (d: any) => d.theme)
+          .join("circle")
+          .attr("class", "circle")
+          .attr("r", (d: any) => radiusScale(d.count));
+
+        const text = chart.selectAll("text")
+          .data(transformedData, (d: any) => d.theme)
+          .join("text")
+          .attr("class", "label")
+          .text((d: any) => d.theme)
+          .style("text-anchor", "middle");
+
+        const simulation = d3
+          .forceSimulation()
+          .force(
+            "collide",
+            d3.forceCollide()
+              .strength(0.5)
+              .radius((d: any) => radiusScale(d.count))
+              .iterations(1)
+          ); // Force that avoids circle overlapping
+
+        // Apply these forces to the nodes and update their positions.
+        // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
+        // @ts-ignore
+        simulation.nodes(transformedData).on("tick", function (d: any) {
+          circles.attr("cx", (d: any) => d.x)
+            .attr("cy", (d: any) => d.y);
+
+          text.attr("x", (d: any) => d.x)
+            .attr("y", (d: any) => d.y);
+        });
+      }
+    },
+    [data]
+  );
+
+  return (
+    <div id="vis">
+      <svg ref={ref} width="30vw" height="50vh">
+        <g transform={`translate(${window.innerWidth / 2 * 0.3}, ${window.innerHeight / 2 * 0.5})`}></g>
+      </svg>
     </div>
   );
 }
