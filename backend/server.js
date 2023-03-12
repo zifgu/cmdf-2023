@@ -61,3 +61,39 @@ app.post("/reframe", async (req, res) => {
   const result = await reframe(req.body.data);
   res.send({ result });
 });
+
+// Find your Account SID and Auth Token at twilio.com/console
+// and set the environment variables. See http://twil.io/secure
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioNum = process.env.TWILIO_NUM;
+const userNum = process.env.USER_NUM;
+const client = require('twilio')(accountSid, authToken, twilioNum, userNum);
+
+
+console.log('accountSid', accountSid);
+console.log('authToken', authToken);
+
+console.log('twilioNum', twilioNum);
+console.log('userNum', userNum);
+
+app.post('/', function (req, res) {
+
+  console.log('req', req)
+
+  client.messages
+  .create({
+     body: 'Are you feeling stressed? Visit ZenZone!',
+     from: twilioNum,
+     to: req.body.phone,
+   })
+  .then(message => {
+    console.log(message.sid)
+    res.send('POST request successful')
+  })
+  .catch(err => {
+    console.log(error);
+  });
+
+
+})
