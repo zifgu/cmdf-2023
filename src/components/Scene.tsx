@@ -3,8 +3,11 @@ import {Loading} from "./Loading";
 import Spline, {SPEObject} from "@splinetool/react-spline";
 import * as THREE from 'three';
 import "./Scene.css";
+import {GiExitDoor} from "react-icons/gi";
+import {useNavigate} from "react-router-dom";
 
 export function Scene() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [playerSpeaking, setPlayerSpeaking] = useState(false);
   const [speechContent, setSpeechContent] = useState("What's worrying you?");
@@ -15,6 +18,9 @@ export function Scene() {
   const player = useRef<SPEObject>();
   const ai = useRef<SPEObject>();
   const camera = useRef<any>();
+
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const calculateScreenPosition = (object: SPEObject) => {
     const objectPosition = new THREE.Vector3(object.position.x, object.position.y, object.position.z);
@@ -59,6 +65,10 @@ export function Scene() {
       setSpeechContent(result.result);
       setAwaitingAi(false);
     });
+  };
+
+  const onExit = () => {
+    navigate("/");
   };
 
   const speechPosition = playerSpeaking ? playerPosition : aiPosition;
@@ -106,12 +116,42 @@ export function Scene() {
               onChange={(e) => setText(e.target.value)}
             />
             <button
+              className="button"
               disabled={playerSpeaking}
               onClick={askAi}
             >
               Say
             </button>
           </div>
+          <button
+            id="exit-button"
+            className="button"
+            onClick={() => setOverlayOpen(!overlayOpen)}
+          >
+            <GiExitDoor aria-label="Exit" size={22}/>
+          </button>
+          {
+            overlayOpen &&
+            <div id="overlay-container">
+              <div id="overlay">
+                <h2 style={{margin: 0}}>Thank you for playing</h2>
+                <div>
+                  Would you like to enter your phone number to be reminded again tomorrow?
+                </div>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="(Optional) xxx-xxx-xxxx"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+                <div id="overlay-buttons-container">
+                  <button className="button" onClick={() => setOverlayOpen(false)}>No, go back</button>
+                  <button className="button" onClick={() => onExit()}>I'm ready to go</button>
+                </div>
+              </div>
+            </div>
+          }
         </>
       }
       <Spline
