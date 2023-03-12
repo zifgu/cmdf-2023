@@ -125,7 +125,7 @@ export function Scene() {
           <div id="speech-input-container">
             <input
               type="text"
-              placeholder="say what's on your mind..."
+              placeholder="Say what's on your mind..."
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
@@ -134,7 +134,7 @@ export function Scene() {
               disabled={playerSpeaking}
               onClick={askAi}
             >
-              Say
+              Chat
             </button>
           </div>
           <button
