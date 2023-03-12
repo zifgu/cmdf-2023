@@ -11,7 +11,10 @@ export function Scene() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [playerSpeaking, setPlayerSpeaking] = useState(false);
-  const [speechContent, setSpeechContent] = useState("What's worrying you?");
+  const [latestPlayerInput, setLatestPlayerInput] = useState("");
+  const [aiSpeaking, setAiSpeaking] = useState(false);
+  const [aiSpeechContent, setAiSpeechContent] = useState("What's worrying you?");
+  const [playerSpeechContent, setPlayerSpeechContent] = useState("");
   const [aiPosition, setAiPosition] = useState([0, 0]);
   const [playerPosition, setPlayerPosition] = useState([0, 0]);
   const [awaitingAi, setAwaitingAi] = useState(false);
@@ -42,14 +45,8 @@ export function Scene() {
     }
   });
 
-  const askAi = async () => {
-    const belief = text;
-    setPlayerSpeaking(true);
-    setSpeechContent(belief);
-    setText("");
-    setAwaitingAi(true);
-
-    fetch("http://localhost:3001/reframe", {
+  const cohereRequest = async (belief: string) => {
+    return await fetch("http://localhost:3001/reframe", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -60,11 +57,27 @@ export function Scene() {
       }),
     }).then((response) => {
       return response.json();
-    }).then((result) => {
-      console.log(result.result);
+    });
+  };
+
+  const askAi = async (belief: string, replacePlayerPhrase: string | undefined) => {
+    if (replacePlayerPhrase) {
+      setPlayerSpeechContent(replacePlayerPhrase);
+    } else {
+      setPlayerSpeechContent(belief);
+    }
+    setPlayerSpeaking(true);
+    setAiSpeaking(false);
+    setAwaitingAi(true);
+    setAiSpeechContent("");
+
+    cohereRequest(belief).then((result: any) => {
+      console.log(result);
       setPlayerSpeaking(false);
-      setSpeechContent(result.result);
+      setAiSpeaking(true);
       setAwaitingAi(false);
+      setPlayerSpeechContent("");
+      setAiSpeechContent(result.result);
     });
   };
 
@@ -85,9 +98,7 @@ export function Scene() {
     navigate("/");
   };
 
-  const speechPosition = playerSpeaking ? playerPosition : aiPosition;
-
-  const waitPosition = awaitingAi ? aiPosition : (text.length > 0 ? playerPosition : null);
+  const awaitingPlayer = text.length > 0;
 
   return (
     <>
@@ -97,30 +108,17 @@ export function Scene() {
       {
         !loading &&
         <>
-          <div
-            className="speech-bubble"
-            style={{
-              left: speechPosition[0],
-              bottom: speechPosition[1],
-            }}
-          >
-            {speechContent}
-          </div>
           {
-            waitPosition &&
-            <div
-              className="speech-bubble"
-              style={{
-                left: waitPosition[0],
-                bottom: waitPosition[1],
-              }}
-            >
-              <div id="spinners">
-                <div className="spinner-grow sm"></div>
-                <div className="spinner-grow sm"></div>
-                <div className="spinner-grow sm"></div>
-              </div>
-            </div>
+            playerSpeaking && <SpeechBubble pos={playerPosition} content={playerSpeechContent}/>
+          }
+          {
+            aiSpeaking && <SpeechBubble pos={aiPosition} content={aiSpeechContent}/>
+          }
+          {
+            awaitingAi && <WaitingSpeechBubble pos={aiPosition}/>
+          }
+          {
+            awaitingPlayer && <WaitingSpeechBubble pos={playerPosition}/>
           }
           <div id="speech-input-container">
             <input
@@ -132,9 +130,23 @@ export function Scene() {
             <button
               className="button"
               disabled={playerSpeaking}
-              onClick={askAi}
+              onClick={async () => {
+                const belief = text;
+                setLatestPlayerInput(belief);
+                setText("");
+                await askAi(belief, undefined);
+              }}
             >
               Chat
+            </button>
+            <button
+              className="button"
+              disabled={playerSpeaking}
+              onClick={async () => {
+                await askAi(latestPlayerInput, "I don't know, can you say it differently?");
+              }}
+            >
+              Pick another
             </button>
           </div>
           <button
@@ -187,5 +199,37 @@ export function Scene() {
         }}
       />
     </>
+  );
+}
+
+function WaitingSpeechBubble({pos} : {pos: number[]}) {
+  return (
+    <div
+      className="speech-bubble"
+      style={{
+        left: pos[0],
+        bottom: pos[1],
+      }}
+    >
+      <div id="spinners">
+        <div className="spinner-grow sm"></div>
+        <div className="spinner-grow sm"></div>
+        <div className="spinner-grow sm"></div>
+      </div>
+    </div>
+  );
+}
+
+function SpeechBubble({pos, content} : {pos: number[], content: string}) {
+  return (
+    <div
+      className="speech-bubble"
+      style={{
+        left: pos[0],
+        bottom: pos[1],
+      }}
+    >
+      {content}
+    </div>
   );
 }
