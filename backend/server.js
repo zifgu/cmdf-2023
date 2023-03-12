@@ -1,6 +1,7 @@
 const express = require('express');
 const cohere = require('cohere-ai');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const app = express();
 
 const PORT = process.env.PORT || 3001;
@@ -48,11 +49,15 @@ Replacement thought:`,
 
 app.use(express.json());
 
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
 app.post("/reframe", async (req, res) => {
   const result = await reframe(req.body.data);
-  res.send(result);
+  res.send({ result });
 });

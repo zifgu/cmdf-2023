@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import {Scene} from "./components/Scene";
+import {Select} from "./components/Select";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/game",
     element: <Scene/>,
+  },
+  {
+    path: "/select",
+    element: <Select/>,
   },
   {
     path: "/",
