@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import {Scene} from "./components/Scene";
 import {Select} from "./components/Select";
+import {Home} from "./components/Home";
+import {Tutorial} from "./components/Tutorial";
+import {Tutorial_1} from "./components/Tutorial_1";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
     path: "/",
     element: <Onboarding/>,
   },
+  {
+    path: "/Home",
+    element: <Home/>,
+  },
+  {
+    path: "/Tutorial",
+    element: <Tutorial/>,
+  },
+  {
+    path: "/Tutorial_1",
+    element: <Tutorial_1/>,
+  }
 ]);
 
 root.render(
