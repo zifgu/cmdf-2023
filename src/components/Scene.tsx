@@ -150,7 +150,7 @@ export function Scene() {
               <div id="overlay">
                 <h2 style={{margin: 0}}>Thank you for playing</h2>
                 <div>
-                  Would you like to enter your phone number to be reminded again tomorrow?
+                  Enter your phone number if you would like to receive a text reminder to play again!
                 </div>
                 <input
                   type="text"
@@ -160,8 +160,8 @@ export function Scene() {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
                 <div id="overlay-buttons-container">
-                  <button className="button" onClick={() => setOverlayOpen(false)}>No, go back</button>
-                  <button className="button" onClick={() => onExit()}>I'm ready to go</button>
+                  <button className="button" onClick={() => setOverlayOpen(false)}>Go back</button>
+                  <button className="button" onClick={() => onExit()}>See you soon</button>
                 </div>
               </div>
             </div>
