@@ -6,13 +6,18 @@ import "./Scene.css";
 import {GiExitDoor} from "react-icons/gi";
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
+import {RiSunFoggyFill} from "react-icons/ri";
+import {BsFillCloudRainFill} from "react-icons/bs";
+
+const MAX_SCORE = 4;
 
 export function Scene() {
   const navigate = useNavigate();
+  const [thoughts, setThoughts] = useState({});
   const [loading, setLoading] = useState(true);
   const [playerSpeaking, setPlayerSpeaking] = useState(false);
   const [latestPlayerInput, setLatestPlayerInput] = useState("");
-  const [aiSpeaking, setAiSpeaking] = useState(false);
+  const [aiSpeaking, setAiSpeaking] = useState(true);
   const [aiSpeechContent, setAiSpeechContent] = useState("What's worrying you?");
   const [playerSpeechContent, setPlayerSpeechContent] = useState("");
   const [aiPosition, setAiPosition] = useState([0, 0]);
@@ -60,9 +65,9 @@ export function Scene() {
     });
   };
 
-  const askAi = async (belief: string, replacePlayerPhrase: string | undefined) => {
-    if (replacePlayerPhrase) {
-      setPlayerSpeechContent(replacePlayerPhrase);
+  const askAi = async (belief: string, regenerate: boolean) => {
+    if (regenerate) {
+      setPlayerSpeechContent("Hmm, that doesn't fit me...");
     } else {
       setPlayerSpeechContent(belief);
     }
@@ -73,11 +78,14 @@ export function Scene() {
 
     cohereRequest(belief).then((result: any) => {
       console.log(result);
+      const reframedBelief = result.result;
       setPlayerSpeaking(false);
       setAiSpeaking(true);
       setAwaitingAi(false);
       setPlayerSpeechContent("");
-      setAiSpeechContent(result.result);
+
+      setAiSpeechContent(reframedBelief);
+      setThoughts({...thoughts, [belief]: reframedBelief});
     });
   };
 
@@ -129,25 +137,41 @@ export function Scene() {
             />
             <button
               className="button"
-              disabled={playerSpeaking}
+              disabled={awaitingAi}
               onClick={async () => {
                 const belief = text;
                 setLatestPlayerInput(belief);
                 setText("");
-                await askAi(belief, undefined);
+                await askAi(belief, false);
               }}
             >
               Chat
             </button>
             <button
               className="button"
-              disabled={playerSpeaking}
+              disabled={awaitingAi}
               onClick={async () => {
-                await askAi(latestPlayerInput, "I don't know, can you say it differently?");
+                await askAi(latestPlayerInput, true);
               }}
             >
               Pick another
             </button>
+          </div>
+          <div id="score-container">
+            {/*Score: {Object.keys(thoughts).length}*/}
+            <div id="scores-container">
+              {
+                Array.from(Array(MAX_SCORE).keys()).map((i) => (
+                  <div className="score-icon-container">
+                    {
+                      i < Object.keys(thoughts).length ?
+                        <RiSunFoggyFill size={30} className="sun"/> :
+                        <BsFillCloudRainFill size={30} className="rain"/>
+                    }
+                  </div>
+                ))
+              }
+            </div>
           </div>
           <button
             id="exit-button"
