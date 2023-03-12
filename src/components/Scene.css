@@ -1,0 +1,114 @@
+.speech-bubble {
+    position: absolute;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0.5rem 0.75rem;
+    max-width: 50%;
+}
+
+#speech-input-container {
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+#speech-input-container input {
+    width: 80%;
+
+    background-color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+}
+
+#speech-input-container input:active, #speech-input-container input:focus {
+    border: none;
+    outline: 3px solid rgba(255, 246, 193, 0.5);
+}
+
+.button {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+
+    background-color: #5ff8dc;
+    color: #232121;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.button:active, .button:focus {
+    outline: 3px solid rgba(95, 248, 220, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+#exit-button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 50px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0 0 0 / 75%);
+}
+
+#overlay {
+    width: 40%;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+#overlay input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 1rem 0;
+
+    background-color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+}
+
+#overlay input:active, #overlay input:focus {
+    outline: 3px solid rgba(95, 248, 220, 0.5);
+}
+
+#overlay-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}

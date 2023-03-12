@@ -24,13 +24,13 @@
 }
 
 #spinners .spinner-grow:nth-child(1) {
-    animation-delay: 150ms;
+    animation-delay: 0ms;
 }
 #spinners .spinner-grow:nth-child(2) {
-    animation-delay: 300ms;
+    animation-delay: 150ms;
 }
 #spinners .spinner-grow:nth-child(3) {
-    animation-delay: 450ms;
+    animation-delay: 300ms;
 }
 
 .spinner-grow {
@@ -38,9 +38,14 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: rgba(255 255 255 / 60%);
+    background-color: currentColor;
     opacity: 0;
     animation: 1000ms linear infinite spinner-grow;
+}
+
+.spinner-grow.sm {
+    width: 10px;
+    height: 10px;
 }
 
 @keyframes spinner-grow {
