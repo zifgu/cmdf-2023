@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Spline from "@splinetool/react-spline";
-import './Tutorial.css';
+import './Tutorial_1.css';
 
 export function Tutorial_1(){
     return (
@@ -10,13 +10,13 @@ export function Tutorial_1(){
         <p>habit, it can make life miserable</p>
 
         <div className='vertical-center'>
-            <a href='/game'>
+            <a href='/tutorial_2'>
                     <button className='tutorial-button'>what should I do?</button>
             </a>
         </div>
-        <div className='background-img'>
+        {/* <div className='background-img'>
             <img id="pig" src="background.png" width="120%" />
-        </div>
+        </div> */}
     </div>
     );
 }

@@ -9,7 +9,7 @@ export function Tutorial(){
         <p>Would you like to learn how to play?</p>
 
         <div className='vertical-center'>
-            <a href='/game'>
+            <a href='/tutorial_1'>
                     <button className='tutorial-button'>I'd appreciate the help</button>
             </a>
             <a href='/game'>
