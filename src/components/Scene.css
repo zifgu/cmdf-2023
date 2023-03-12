@@ -86,7 +86,8 @@
 
 #overlay {
     width: 40%;
-    background-color: #f6ffea;
+    background-color: #f6ffea !important;
+    color: #623412 !important;
     border-radius: 1rem;
     padding: 1rem;
 }
@@ -107,7 +108,7 @@
 }
 
 #overlay input:active, #overlay input:focus {
-    outline: 3px solid rgba(95, 248, 220, 0.5);
+    outline: 3px solid #f8bcbc;
 }
 
 #overlay-buttons-container {
