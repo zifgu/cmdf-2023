@@ -150,7 +150,7 @@ export function Scene() {
               <div id="overlay">
                 <h2 style={{margin: 0}}>Thank you for playing</h2>
                 <div>
-                  Enter your phone number if you would like to receive a text reminder to play again!
+                  Enter your phone number if you would like to receive a daily text reminder to play again!
                 </div>
                 <input
                   type="text"
