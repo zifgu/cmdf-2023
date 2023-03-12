@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Spline from "@splinetool/react-spline";
+import './Tutorial.css';
 
 export function Tutorial(){
     return (
@@ -9,10 +10,10 @@ export function Tutorial(){
 
         <div className='vertical-center'>
             <a href='/game'>
-                    <button>I'd appreciate the help</button>
+                    <button className='tutorial-button'>I'd appreciate the help</button>
             </a>
             <a href='/game'>
-                    <button>Options</button>
+                    <button className='tutorial-button'>I'm familiar, let's get started</button>
             </a>
         </div>
 
