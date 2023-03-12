@@ -11,7 +11,8 @@
     height: 100vh;
     padding: 40px;
     line-height: 2em;
-    font-family: "Poppins";
+    font-family: "Poppins", sans-serif;
+    text-align: center;
     margin: auto;
     position: relative;
     overflow: hidden;
@@ -53,7 +54,6 @@ button{
     border-radius: 25px;
     cursor: pointer;
     border: none;
-    height: 45px;
     width: 140px;
 }
 button:hover {
@@ -65,7 +65,15 @@ button:hover {
     flex-direction: column;
     text-align: center;
     margin: 30px;
+    width: 100%;
+    gap: 1rem;
 }
+
+.vertical-center button {
+    font-size: 20px;
+    width: 20%;
+}
+
 .left-tree {
     margin-left: 0;
     padding-left: 0;

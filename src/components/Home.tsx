@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import Spline from "@splinetool/react-spline";
 import './Home.css';
+import {useNavigate} from "react-router-dom";
 
 export function Home() {
+  const navigate = useNavigate();
+
     return (
         <div className='Home'>
             <head>
@@ -21,15 +24,9 @@ export function Home() {
                 &nbsp; 
                 <p>Transform your Troubles - Reframe Your Mind</p>
                 <div className='vertical-center'>
-                    <a href='/Tutorial'>
-                            <button>Play</button>
-                    </a>
-                    <a href='/game'>
-                            <button>Option</button>
-                    </a>
-                    <a href='/game'>
-                            <button>Credits</button>
-                    </a>
+                  <button onClick={() => navigate("/Tutorial")}>Play</button>
+                  <button onClick={() => navigate("/game")}>Option</button>
+                  <button onClick={() => navigate("/game")}>Credits</button>
                 </div>
                 
                 
