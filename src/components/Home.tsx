@@ -25,8 +25,8 @@ export function Home() {
                 <p>Transform your Troubles - Reframe Your Mind</p>
                 <div className='vertical-center'>
                   <button onClick={() => navigate("/Tutorial")}>Play</button>
-                  <button onClick={() => navigate("/game")}>Option</button>
-                  <button onClick={() => navigate("/game")}>Credits</button>
+                  <button onClick={() => navigate("/Home")}>Option</button>
+                  <button onClick={() => navigate("/credits")}>Credits</button>
                 </div>
                 
                 
