@@ -5,13 +5,13 @@ import './Tutorial.css';
 export function Tutorial_3(){
     return (
     <div className='intro'>
-        <p>"Reframing" is a proven methond to help</p>
-        <p>wwith stress & anxiety by changing your</p>
+        <p>"Reframing" is a proven method to help</p>
+        <p>with stress & anxiety by changing your</p>
         <p>perspective on a situation to view it in a</p>
         <p>more positive or helpful way.</p>
 
         <div className='vertical-center'>
-            <a href='/Tutorial_last'>
+            <a href='/Tutorial_2'>
                     <button className='tutorial-button'>how do i do that?</button>
             </a>
         </div>

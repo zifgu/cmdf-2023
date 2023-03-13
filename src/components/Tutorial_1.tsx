@@ -10,7 +10,7 @@ export function Tutorial_1(){
         <p>habit, it can make life miserable</p>
 
         <div className='vertical-center'>
-            <a href='/tutorial_2'>
+            <a href='/tutorial_3'>
                     <button className='tutorial-button'>what should I do?</button>
             </a>
         </div>

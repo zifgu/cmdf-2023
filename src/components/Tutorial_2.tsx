@@ -5,14 +5,14 @@ import './Tutorial.css';
 export function Tutorial_2(){
     return (
     <div className='intro'>
-        <p>Reframing can be diffcult if you haven't</p>
+        <p>Reframing can be difficult if you haven't</p>
         <p>done it before.</p>
         <p>The ZenZone is a place where we reframe</p>
         <p>your thoughts for you, along with letting</p>
         <p>you explore our calming space</p>
 
         <div className='vertical-center'>
-            <a href='/tutorial_3'>
+            <a href='/Tutorial_last'>
                     <button className='tutorial-button'>show me!</button>
             </a>
         </div>
